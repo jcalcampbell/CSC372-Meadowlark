@@ -188,6 +188,10 @@
               <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -311,7 +315,7 @@
       <workItem from="1486045178465" duration="18000" />
       <workItem from="1486049572818" duration="238000" />
       <workItem from="1486049900202" duration="2898000" />
-      <workItem from="1486057659376" duration="1236000" />
+      <workItem from="1486057659376" duration="1317000" />
     </task>
     <task id="LOCAL-00001" summary="Chapter 5 Page Test Initial Commit">
       <created>1486058800947</created>
@@ -324,7 +328,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4412000" />
+    <option name="totallyTimeSpent" value="4493000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="862" height="824" extended-state="0" />
