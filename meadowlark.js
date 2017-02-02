@@ -16,7 +16,14 @@ app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
 
-var fortune = requires('./lib/fortune.js');
+app.use(function(req, res, next){
+    if(app.get('env') !== 'production' && req.query.test=='1'){
+        res.locals.showTests = true;
+    }
+    next();
+});
+
+var fortune = require('./lib/fortune.js');
 
 /// Routes
 app.get('/', function(req, res){
