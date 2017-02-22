@@ -24,6 +24,7 @@ app.use(function(req, res, next){
 });
 
 var fortune = require('./lib/fortune.js');
+var weather = require('./lib/weather.js');
 
 /// Routes
 app.get('/', function(req, res){
