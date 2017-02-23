@@ -1,28 +1,38 @@
 <!doctype html>
 <html>
 <head>
-    <title>Meadowlark Travel</title>
+    {{#if pageTitle}}
+        <title>{{pageTitle}}</title>
+    {{else}}
+        <title>Meadowlark Travel</title>
+    {{/if}}
     {{#if showTests}}
         <link rel="stylesheet" href="/vendor/mocha.css">
     {{/if}}
-    <script src="http://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script
+            src="http://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous">
+    </script>
+    {{{_sections.head}}}
 </head>
 <body>
-    <header><img src="/img/logo.png" alt="Meadowlark Travel Logo"></header>
-    {{{body}}}
-    {{#if showTests}}
-        <div id="mocha"></div>
-        <script src="/vendor/mocha.js"></script>
-        <script src="/vendor/chai.js"></script>
-        <script>
-            mocha.ui('tdd');
-            var assert = chai.assert;
-        </script>
-        <script src="/qa/tests-global.js"></script>
-        {{#if pageTestScript}}
-            <script src="{{pageTestScript}}"></script>
-        {{/if}}
-        <script>mocha.run();</script>
+<header><img src="/img/logo.png" alt="Meadowlark Travel Logo"></header>
+{{{body}}}
+{{#if showTests}}
+    <div id="mocha"></div>
+    <script src="/vendor/mocha.js"></script>
+    <script src="/vendor/chai.js"></script>
+    <script>
+        mocha.ui('tdd');
+        var assert = chai.assert;
+    </script>
+    <script src="/qa/tests-global.js"></script>
+    {{#if pageTestScript}}
+        <script src="{{pageTestScript}}"></script>
     {{/if}}
+    <script>mocha.run();</script>
+{{/if}}
+{{{_sections.scripts}}}
 </body>
 </html>

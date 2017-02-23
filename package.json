@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jcalcampbell/CSC372-Meadowlark#readme",
   "dependencies": {
+    "body-parser": "^1.16.1",
     "express": "^4.14.1",
     "express-handlebars": "^3.0.0"
   },
