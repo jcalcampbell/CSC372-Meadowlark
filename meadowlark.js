@@ -40,6 +40,11 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use('/tour*', function (req, res, next) {
+    res.locals.pageTitle = "Meadowlark Tours";
+    next();
+});
+
 var fortune = require('./lib/fortune.js');
 var weather = require('./lib/weather.js');
 
