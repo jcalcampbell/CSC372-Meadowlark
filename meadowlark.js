@@ -99,7 +99,7 @@ app.get('/tours/request-group-rate', function (req, res) {
 
 // Chat Code
 app.get('/chat', function (req, res) {
-    if(req.cookies.chatName) {
+    if(req.signedCookies.chatName) {
         res.locals.chatName = req.cookies.chatName;
         res.render('chat');
     } else {
