@@ -3,6 +3,10 @@
  */
 
 var express = require('express');
+var credentials = require('./credentials');
+
+var fortune = require('./lib/fortune.js');
+var weather = require('./lib/weather.js');
 
 /// App Setup
 var app = express();
@@ -26,6 +30,7 @@ app.set('port', process.env.PORT || 3000);
 /// Middleware
 app.use(express.static(__dirname + '/public'));
 app.use(require('body-parser').urlencoded({extended: true}));
+app.use(require('cookie-parser')(credentials.cookieSecret));
 
 app.use(function (req, res, next) {
     if (app.get('env') !== 'production' && req.query.test == '1') {
@@ -44,9 +49,6 @@ app.use('/tour*', function (req, res, next) {
     res.locals.pageTitle = "Meadowlark Tours";
     next();
 });
-
-var fortune = require('./lib/fortune.js');
-var weather = require('./lib/weather.js');
 
 /// Routes
 app.get('/', function (req, res) {
@@ -97,7 +99,19 @@ app.get('/tours/request-group-rate', function (req, res) {
 
 // Chat Code
 app.get('/chat', function (req, res) {
-    res.render('chat');
+    if(req.cookies.chatName) {
+        res.locals.chatName = req.cookies.chatName;
+        res.render('chat');
+    } else {
+        res.redirect(303, '/chat-login')
+    }
+});
+app.get('/chat-login', function (req, res) {
+    res.render('chat-login');
+});
+app.post('/chat-login', function (req, res) {
+    res.cookie('chatName', req.body.chatName, {signed:true});
+    res.redirect(303, '/chat');
 });
 const Message = function(message, sender) {
     this.message = message;
@@ -111,7 +125,8 @@ for(var i = 0; i < 8; i++) {
 app.post('/chat/server', function (req, res) {
     var newMessage = new Message(
         req.body.message,
-        req.connection.remoteAddress
+        req.signedCookies.chatName
+        //req.connection.remoteAddress
     );
     chatMessages.pop(); // throws away oldest message at bottom
     chatMessages.unshift(newMessage); // new message at top

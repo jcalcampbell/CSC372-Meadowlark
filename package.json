@@ -18,6 +18,7 @@
   "homepage": "https://github.com/jcalcampbell/CSC372-Meadowlark#readme",
   "dependencies": {
     "body-parser": "^1.16.1",
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.1",
     "express-handlebars": "^3.0.0",
     "handlebars": "^4.0.6"
