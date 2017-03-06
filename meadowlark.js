@@ -95,6 +95,38 @@ app.get('/tours/request-group-rate', function (req, res) {
     res.render('tours/request-group-rate');
 });
 
+// Chat Code
+app.get('/chat', function (req, res) {
+    res.render('chat');
+});
+const Message = function(message, sender) {
+    this.message = message;
+    this.sender = sender || '{unknown}';
+    this.time = new Date().toLocaleTimeString();
+}
+var chatMessages = new Array();
+for(var i = 0; i < 8; i++) {
+    chatMessages.push(new Message(''));
+}
+app.post('/chat/server', function (req, res) {
+    var newMessage = new Message(
+        req.body.message,
+        req.connection.remoteAddress
+    );
+    chatMessages.pop(); // throws away oldest message at bottom
+    chatMessages.unshift(newMessage); // new message at top
+    res.send(newMessage); //have to either send response or next()
+});
+
+const message2html = require('handlebars').compile(
+    '{{#each messages}}<p><strong>{{sender}}</strong>: {{message}} | {{time}}</p>{{/each}}'
+)
+
+app.get('/chat/server', function (req, res) {
+    res.setHeader('Cache-Control', 'no-cache');
+    res.send(message2html({messages: chatMessages}));
+})
+
 /// Error Handling
 //custom 404 page
 app.use(function (req, res, next) {

@@ -1,0 +1,32 @@
+<h2>Group chat with Meadowlark!</h2>
+<form id="chatform">
+    <label>Message: <input name="message"></label>
+    <input type="submit" value="Send">
+</form>
+<h3>Messages</h3>
+<div id="messages"></div>
+{{#section 'scripts'}}
+    <script>
+        var displayMessages = function () {
+            $.get('/chat/server').done(function (data) {
+                $("#messages").html(data);
+            })
+        };
+        $(displayMessages);
+
+        $(function () {
+            setInterval(displayMessages, 3000);
+        });
+
+        $(function () {
+            $("#chatform").on('submit', function (evt) {
+                evt.preventDefault();
+                $.ajax({
+                    url: '/chat/server',
+                    type: 'POST',
+                    data: $(this).serialize()
+                }).done(displayMessages);
+            });
+        });
+    </script>
+{{/section}}
