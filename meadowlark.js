@@ -40,6 +40,16 @@ app.use(function (req, res, next) {
 });
 
 app.use(function (req, res, next) {
+    if(req.signedCookies.firstVisit) {
+        res.locals.firstVisit = req.signedCookies.firstVisit;
+    } else {
+        var firstDate = new Date().toLocaleDateString();
+        res.cookie('firstVisit', firstDate, {signed: true, maxAge: 31557600000});
+    }
+    next();
+});
+
+app.use(function (req, res, next) {
     if (!res.locals.partials) res.locals.partials = {};
     res.locals.partials.weatherContext = weather.getWeatherData();
     next();
@@ -100,7 +110,7 @@ app.get('/tours/request-group-rate', function (req, res) {
 // Chat Code
 app.get('/chat', function (req, res) {
     if(req.signedCookies.chatName) {
-        res.locals.chatName = req.cookies.chatName;
+        res.locals.chatName = req.signedCookies.chatName;
         res.render('chat');
     } else {
         res.redirect(303, '/chat-login')
